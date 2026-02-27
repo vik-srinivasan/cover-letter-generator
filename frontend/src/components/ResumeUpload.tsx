@@ -16,8 +16,8 @@ export default function ResumeUpload({ onSubmit, onBack }: Props) {
   const [error, setError] = useState("");
 
   function validateFile(file: File): string | null {
-    if (file.type !== "application/pdf") return "Only PDF files are accepted";
-    if (file.size > MAX_FILE_SIZE) return "File must be under 10MB";
+    if (file.type !== "application/pdf") return "PDFs only, please";
+    if (file.size > MAX_FILE_SIZE) return "That file is too chunky (10MB max)";
     return null;
   }
 
@@ -54,74 +54,53 @@ export default function ResumeUpload({ onSubmit, onBack }: Props) {
   }
 
   return (
-    <div className="animate-fade-in-up bg-white rounded-2xl shadow-sm shadow-slate-200/50 border border-slate-200/60 p-7">
-      <div className="flex items-center gap-3 mb-5">
-        <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center">
-          <svg className="w-4 h-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-          </svg>
-        </div>
-        <h2 className="text-lg font-semibold text-slate-900">Upload Resume</h2>
-      </div>
+    <div className="animate-fade-in-up glass rounded-2xl p-7 gradient-border">
+      <h2 className="text-base font-semibold text-zinc-200 mb-5">Your resume</h2>
 
       <div
         onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
         onDragLeave={() => setDragActive(false)}
         onDrop={handleDrop}
-        className={`border-2 border-dashed rounded-xl p-10 text-center transition-all duration-200 ${
+        className={`border-2 border-dashed rounded-xl p-10 text-center transition-all duration-300 ${
           dragActive
-            ? "border-indigo-400 bg-indigo-50/50 scale-[1.01]"
+            ? "border-purple-500/50 bg-purple-500/5 scale-[1.02]"
             : resume
-            ? "border-emerald-300 bg-emerald-50/30"
-            : "border-slate-200 hover:border-slate-300 bg-slate-50/30"
+            ? "border-emerald-500/30 bg-emerald-500/5"
+            : "border-zinc-800 hover:border-zinc-700 bg-zinc-900/30"
         }`}
       >
         {resume ? (
           <div className="animate-fade-in-up">
-            <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-3">
-              <svg className="w-6 h-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <p className="text-sm font-semibold text-slate-900">{resume.name}</p>
-            <p className="text-xs text-slate-500 mt-1">
+            <div className="text-3xl mb-3">&#10003;</div>
+            <p className="text-sm font-semibold text-zinc-200">{resume.name}</p>
+            <p className="text-xs text-zinc-500 mt-1">
               {(resume.size / 1024).toFixed(0)} KB
             </p>
             <button
               onClick={() => setResume(null)}
-              className="mt-3 text-xs font-medium text-slate-400 hover:text-red-500 transition-colors"
+              className="mt-3 text-xs font-medium text-zinc-600 hover:text-rose-400 transition-colors"
             >
-              Remove file
+              remove
             </button>
           </div>
         ) : (
           <div>
-            <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-4">
-              <svg className="w-6 h-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-              </svg>
-            </div>
-            <p className="text-sm text-slate-600">
-              Drag and drop your resume here, or{" "}
-              <label className="text-indigo-600 font-semibold cursor-pointer hover:text-indigo-700 transition-colors">
+            <div className="text-4xl mb-4 opacity-40">&#8593;</div>
+            <p className="text-sm text-zinc-400">
+              Drop your resume here, or{" "}
+              <label className="text-purple-400 font-semibold cursor-pointer hover:text-purple-300 transition-colors">
                 browse
                 <input type="file" accept=".pdf" onChange={handleFileChange} className="hidden" />
               </label>
             </p>
-            <p className="text-xs text-slate-400 mt-2">PDF only, up to 10MB</p>
+            <p className="text-xs text-zinc-600 mt-2">PDF, up to 10MB</p>
           </div>
         )}
       </div>
 
       <div className="mt-5">
-        <label className="block text-sm font-medium text-slate-600 mb-2">
-          Additional documents <span className="text-slate-400 font-normal">(optional)</span>
-        </label>
-        <label className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 text-sm text-slate-600 cursor-pointer hover:bg-slate-50 transition-colors">
-          <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-          Add files
+        <label className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg border border-zinc-800 text-xs font-medium text-zinc-500 cursor-pointer hover:border-zinc-700 hover:text-zinc-400 transition-all">
+          + Add supporting docs
           <input type="file" accept=".pdf" multiple onChange={handleAdditionalDocs} className="hidden" />
         </label>
         {additionalDocs.length > 0 && (
@@ -129,13 +108,11 @@ export default function ResumeUpload({ onSubmit, onBack }: Props) {
             {additionalDocs.map((doc, i) => (
               <span
                 key={i}
-                className="inline-flex items-center gap-1.5 pl-3 pr-2 py-1.5 bg-slate-100 rounded-lg text-xs font-medium text-slate-700"
+                className="inline-flex items-center gap-1.5 pl-3 pr-2 py-1.5 bg-zinc-900 border border-zinc-800 rounded-lg text-xs font-medium text-zinc-400"
               >
                 {doc.name}
-                <button onClick={() => removeAdditionalDoc(i)} className="w-4 h-4 rounded-full hover:bg-slate-200 flex items-center justify-center text-slate-400 hover:text-red-500 transition-colors">
-                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
+                <button onClick={() => removeAdditionalDoc(i)} className="text-zinc-600 hover:text-rose-400 transition-colors">
+                  &times;
                 </button>
               </span>
             ))}
@@ -144,7 +121,7 @@ export default function ResumeUpload({ onSubmit, onBack }: Props) {
       </div>
 
       {error && (
-        <div className="mt-3 flex items-center gap-2 text-sm text-red-600">
+        <div className="mt-3 flex items-center gap-2 text-sm text-rose-400">
           <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
           </svg>
@@ -155,16 +132,16 @@ export default function ResumeUpload({ onSubmit, onBack }: Props) {
       <div className="mt-7 flex gap-3">
         <button
           onClick={onBack}
-          className="px-5 py-2.5 border border-slate-200 text-slate-600 font-medium rounded-xl hover:bg-slate-50 transition-colors"
+          className="px-5 py-2.5 border border-zinc-800 text-zinc-400 font-medium rounded-xl hover:bg-zinc-900 hover:text-zinc-300 transition-all text-sm"
         >
           Back
         </button>
         <button
           onClick={() => resume && onSubmit(resume, additionalDocs)}
           disabled={!resume}
-          className="flex-1 py-2.5 bg-gradient-to-r from-indigo-500 to-violet-600 text-white font-medium rounded-xl hover:from-indigo-600 hover:to-violet-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-sm shadow-indigo-200 active:scale-[0.99]"
+          className="btn-glow flex-1 py-2.5 text-white font-semibold rounded-xl text-sm"
         >
-          Generate Cover Letter
+          Generate
         </button>
       </div>
     </div>
