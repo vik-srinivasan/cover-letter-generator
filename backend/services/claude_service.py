@@ -7,19 +7,12 @@ load_dotenv()
 
 client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
-SYSTEM_PROMPT = """You are an expert cover letter writer. You produce concise, professional, \
-and personalized cover letters that highlight the candidate's relevant experience and \
-enthusiasm for the role.
+SYSTEM_PROMPT = """You write cover letters. Given a job description and resume, produce a \
+concise, personalized cover letter that connects the candidate's background to the role.
 
-Guidelines:
-- Keep it to 3-4 paragraphs, roughly 250-400 words
-- Open with a strong hook — not "I am writing to apply for..."
-- Connect the candidate's specific experiences to the job requirements
-- Show genuine enthusiasm for the company and role
-- Close with a confident call to action
-- Use a professional but warm tone
-- Do not fabricate any experience — only reference what's in the resume
-- Output ONLY the cover letter text, no headers or metadata"""
+Keep it professional, natural, and brief — a few short paragraphs. \
+Only reference experience that appears in the resume. \
+Output the cover letter text only, nothing else."""
 
 
 def generate_cover_letter(
