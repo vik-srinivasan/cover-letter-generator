@@ -16,8 +16,8 @@ export default function ResumeUpload({ onSubmit, onBack }: Props) {
   const [error, setError] = useState("");
 
   function validateFile(file: File): string | null {
-    if (file.type !== "application/pdf") return "PDFs only, please";
-    if (file.size > MAX_FILE_SIZE) return "That file is too chunky (10MB max)";
+    if (file.type !== "application/pdf") return "Only PDF files are accepted";
+    if (file.size > MAX_FILE_SIZE) return "File must be under 10MB";
     return null;
   }
 
@@ -55,7 +55,7 @@ export default function ResumeUpload({ onSubmit, onBack }: Props) {
 
   return (
     <div className="animate-fade-in-up glass rounded-2xl p-7 gradient-border">
-      <h2 className="text-base font-semibold text-zinc-200 mb-5">Your resume</h2>
+      <h2 className="text-base font-semibold text-zinc-200 mb-5">Resume</h2>
 
       <div
         onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}

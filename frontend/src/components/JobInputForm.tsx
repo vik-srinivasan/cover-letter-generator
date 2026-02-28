@@ -31,7 +31,7 @@ export default function JobInputForm({ onSubmit }: Props) {
 
   function handleSubmit() {
     if (text.trim().length < 20) {
-      setError("Need a bit more detail than that");
+      setError("Please provide a longer job description");
       return;
     }
     setError("");
@@ -41,7 +41,7 @@ export default function JobInputForm({ onSubmit }: Props) {
   return (
     <div className="animate-fade-in-up glass rounded-2xl p-7 gradient-border">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-base font-semibold text-zinc-200">The gig</h2>
+        <h2 className="text-base font-semibold text-zinc-200">Job Description</h2>
         <div className="inline-flex rounded-lg bg-zinc-900/80 border border-zinc-800 p-0.5">
           <button
             onClick={() => setMode("paste")}
@@ -86,7 +86,7 @@ export default function JobInputForm({ onSubmit }: Props) {
                   <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" className="opacity-25" />
                   <path d="M4 12a8 8 0 018-8" stroke="currentColor" strokeWidth="3" strokeLinecap="round" className="opacity-75" />
                 </svg>
-                Grabbing
+                Fetching
               </span>
             ) : (
               "Fetch"
@@ -117,7 +117,7 @@ export default function JobInputForm({ onSubmit }: Props) {
         disabled={!text.trim()}
         className="btn-glow mt-5 w-full py-3 text-white font-semibold rounded-xl text-sm"
       >
-        Next step
+        Continue
       </button>
     </div>
   );

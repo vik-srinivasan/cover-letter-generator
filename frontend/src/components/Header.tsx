@@ -11,11 +11,11 @@ export default function Header() {
         </span>
         <br />
         <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-          that actually slap.
+          worth reading.
         </span>
       </h1>
       <p className="mt-4 text-base text-zinc-500 max-w-sm mx-auto leading-relaxed">
-        Drop in a job posting, upload your resume, and watch the magic happen.
+        Paste a job posting, upload your resume, get a tailored cover letter in seconds.
       </p>
     </header>
   );
