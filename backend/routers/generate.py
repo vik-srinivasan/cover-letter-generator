@@ -1,8 +1,12 @@
+import logging
+
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 
 from models.schemas import GenerateResponse
 from services.claude_service import generate_cover_letter, refine_cover_letter
 from services.pdf_service import extract_text_from_pdf
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -15,6 +19,7 @@ async def generate(
     previous_letter: str = Form(default=""),
     feedback: str = Form(default=""),
 ):
+    logger.info("Generate endpoint hit: resume=%s, feedback=%s", resume.filename, bool(feedback))
     try:
         # Extract resume text
         resume_bytes = await resume.read()

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -11,7 +11,7 @@ app = FastAPI(title="Cover Letter Generator API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -29,17 +29,17 @@ async def health():
 # Serve frontend static export if available (production build)
 static_dir = Path(__file__).parent / "static"
 if static_dir.is_dir():
-    # Serve Next.js asset directories
-    for subdir in ("_next", "images"):
-        sub_path = static_dir / subdir
-        if sub_path.is_dir():
-            app.mount(f"/{subdir}", StaticFiles(directory=sub_path), name=subdir)
+    # Mount Next.js assets
+    next_dir = static_dir / "_next"
+    if next_dir.is_dir():
+        app.mount("/_next", StaticFiles(directory=next_dir), name="next-static")
 
     @app.get("/{path:path}")
     async def serve_frontend(path: str):
-        # Try exact file match first (e.g. favicon.ico)
+        # Never serve static files for /api paths
+        if path.startswith("api/"):
+            return {"detail": "Not found"}
         file = static_dir / path
         if file.is_file():
             return FileResponse(file)
-        # Fall back to index.html
         return FileResponse(static_dir / "index.html")
