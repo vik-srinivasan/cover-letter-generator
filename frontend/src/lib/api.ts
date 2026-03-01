@@ -1,7 +1,6 @@
 import { GenerateResponse, ScrapeResponse } from "@/types";
 
-const API_BASE =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "/api";
 
 export async function scrapeUrl(url: string): Promise<ScrapeResponse> {
   const res = await fetch(`${API_BASE}/scrape-url`, {

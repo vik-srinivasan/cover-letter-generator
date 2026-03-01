@@ -2,7 +2,7 @@
 
 Upload a job description and your resume — get a personalized cover letter powered by Claude.
 
-## Setup
+## Local Development
 
 ### Backend
 ```bash
@@ -21,3 +21,11 @@ npm run dev
 ```
 
 Open http://localhost:3000
+
+## Deploy to Render
+
+Create a single **Web Service** with:
+
+- **Build command:** `./build.sh`
+- **Start command:** `cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT`
+- **Environment variable:** `ANTHROPIC_API_KEY`
